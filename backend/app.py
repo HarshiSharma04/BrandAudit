@@ -129,6 +129,81 @@ def analyze_twitter():
         'summary': sentiment_counts
     })
 
+# -------------------- Youtube Integration --------------------
+import googleapiclient.discovery
+
+# Your YouTube API key
+YOUTUBE_API_KEY = "AIzaSyDu5SgK8w_M3CJKCA_3xTy24X7vGcuwUtw"
+
+# Initialize YouTube client
+youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+
+def get_youtube_comments(keyword):
+    print(f"Fetching YouTube comments for keyword: {keyword}")
+    comments = []
+
+    try:
+        # Search videos by keyword
+        search_response = youtube.search().list(
+            q=keyword,
+            part="id",
+            type="video",
+            maxResults=3
+        ).execute()
+
+        for item in search_response.get("items", []):
+            video_id = item["id"]["videoId"]
+
+            # Get top comments from video
+            comment_response = youtube.commentThreads().list(
+                part="snippet",
+                videoId=video_id,
+                maxResults=10,
+                textFormat="plainText"
+            ).execute()
+
+            for comment_thread in comment_response.get("items", []):
+                comment = comment_thread["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
+                comments.append(comment)
+
+    except Exception as e:
+        print("YouTube API Error:", e)
+
+    print(f"Fetched {len(comments)} comments")
+    return comments
+
+@app.route('/youtube', methods=['POST'])
+def analyze_youtube():
+    data = request.get_json()
+    keyword = data.get('keyword', '')
+
+    comments = get_youtube_comments(keyword)
+    results = []
+    sentiment_counts = {'Positive': 0, 'Neutral': 0, 'Negative': 0}
+
+    for text in comments:
+        score = analyzer.polarity_scores(text)
+        compound = score['compound']
+        if compound >= 0.2:
+            sentiment = 'Positive'
+        elif compound <= -0.2:
+            sentiment = 'Negative'
+        else:
+            sentiment = 'Neutral'
+
+        sentiment_counts[sentiment] += 1
+        results.append({
+            'text': text,
+            'sentiment': sentiment,
+            'score': compound
+        })
+
+    return jsonify({
+        'comments': results,
+        'summary': sentiment_counts
+    })
+
+
 # -------------------- Run App --------------------
 if __name__ == '__main__':
     app.run(debug=True)

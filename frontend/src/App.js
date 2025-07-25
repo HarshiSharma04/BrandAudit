@@ -2,6 +2,8 @@ import React from 'react';
 import SentimentChecker from './components/SentimentChecker';
 import RedditSentiment from './components/RedditSentiment';
 import TwitterSentiment from './components/TwitterSentiment';
+import YouTubeSentiment from './components/YouTubeSentiment';
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <SentimentChecker />
       <RedditSentiment />
       <TwitterSentiment />
+      <YouTubeSentiment />
     </div>
   );
 }
