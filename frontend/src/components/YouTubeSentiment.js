@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const YouTubeSentiment = () => {
   const [keyword, setKeyword] = useState('');
@@ -25,9 +29,25 @@ const YouTubeSentiment = () => {
     setLoading(false);
   };
 
+  const chartData = summary && {
+    labels: ['Positive', 'Neutral', 'Negative'],
+    datasets: [
+      {
+        data: [
+          summary.Positive || 0,
+          summary.Neutral || 0,
+          summary.Negative || 0
+        ],
+        backgroundColor: ['#4caf50', '#ffeb3b', '#f44336'],
+        borderWidth: 1
+      }
+    ]
+  };
+
   return (
     <div style={{ marginTop: '3rem' }}>
       <h2>📺 Brand Sentiment from YouTube</h2>
+
       <input
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
@@ -61,16 +81,8 @@ const YouTubeSentiment = () => {
       {summary && (
         <div style={{ marginTop: '2rem', textAlign: 'center' }}>
           <h3>📊 Sentiment Summary:</h3>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '1rem' }}>
-            <div style={{ background: '#e8f5e9', padding: '10px', borderRadius: '8px' }}>
-              <strong>Positive: {summary.Positive}</strong>
-            </div>
-            <div style={{ background: '#fff3cd', padding: '10px', borderRadius: '8px' }}>
-              <strong>Neutral: {summary.Neutral}</strong>
-            </div>
-            <div style={{ background: '#f8d7da', padding: '10px', borderRadius: '8px' }}>
-              <strong>Negative: {summary.Negative}</strong>
-            </div>
+          <div style={{ width: '300px', margin: 'auto' }}>
+            <Pie data={chartData} />
           </div>
         </div>
       )}

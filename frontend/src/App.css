@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary: #4f46e5;
+  --secondary: #6366f1;
+  --background: #f3f4f6;
+  --white: #ffffff;
+  --gray: #e5e7eb;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background);
+  color: var(--text-dark);
+}
+
+.app-root {
+  padding: 2rem;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.hero-section p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.main-content {
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+}
+
+.sentiment-checker {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.platform-section {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab-buttons button {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid transparent;
+  background-color: var(--gray);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.tab-buttons button.active,
+.tab-buttons button:hover {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--secondary);
+}
+
+.tab-content {
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 4rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 function RedditSentiment() {
   const [keyword, setKeyword] = useState('');
@@ -14,21 +18,36 @@ function RedditSentiment() {
     setSummary(null);
 
     try {
-      const res = await axios.post('http://127.0.0.1:5000/reddit', {
-        keyword
-      });
+      const res = await axios.post('http://127.0.0.1:5000/reddit', { keyword });
       setResults(res.data.posts);
       setSummary(res.data.summary);
     } catch (err) {
       alert('Failed to fetch Reddit data');
       console.error(err);
     }
+
     setLoading(false);
+  };
+
+  const chartData = summary && {
+    labels: ['Positive', 'Neutral', 'Negative'],
+    datasets: [
+      {
+        data: [
+          summary.Positive || 0,
+          summary.Neutral || 0,
+          summary.Negative || 0
+        ],
+        backgroundColor: ['#4caf50', '#ffeb3b', '#f44336'],
+        borderWidth: 1
+      }
+    ]
   };
 
   return (
     <div style={{ marginTop: '3rem' }}>
       <h2>🔍 Brand Sentiment from Reddit</h2>
+
       <input
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
@@ -60,20 +79,14 @@ function RedditSentiment() {
       {loading && <p style={{ marginTop: '1rem' }}>⏳ Fetching posts...</p>}
 
       {summary && (
-        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <h3>📊 Sentiment Summary:</h3>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '1rem' }}>
-            <div style={{ background: '#e8f5e9', padding: '10px', borderRadius: '8px' }}>
-              <strong>Positive: {summary.Positive || 0}</strong>
-            </div>
-            <div style={{ background: '#fff3cd', padding: '10px', borderRadius: '8px' }}>
-              <strong>Neutral: {summary.Neutral || 0}</strong>
-            </div>
-            <div style={{ background: '#f8d7da', padding: '10px', borderRadius: '8px' }}>
-              <strong>Negative: {summary.Negative || 0}</strong>
+        <>
+          <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+            <h3>📊 Sentiment Summary:</h3>
+            <div style={{ width: '300px', margin: 'auto' }}>
+              <Pie data={chartData} />
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {results.length > 0 && (
