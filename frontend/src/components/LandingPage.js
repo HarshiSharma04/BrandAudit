@@ -15,9 +15,17 @@ const LandingPage = () => {
         <p className="landing-subtitle">
           Your all-in-one brand sentiment intelligence dashboard — powered by AI.
         </p>
-        <button className="landing-btn" onClick={() => navigate('/dashboard')}>
+        <button
+          className="landing-btn"
+          onClick={() => {
+          console.log("navigating to login");
+          navigate('/login');
+        }}
+>
           🚀 Get Started
         </button>
+
+
       </div>
 
       <div className="landing-illustration">
