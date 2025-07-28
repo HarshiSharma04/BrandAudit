@@ -1,0 +1,141 @@
+/* Dashboard Wrapper */
+.dashboard-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  padding: 3rem 2rem;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.dashboard-header h1 {
+  font-size: 3rem;
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.3rem;
+}
+
+.dashboard-header p {
+  color: #e0e0e0;
+  font-size: 1.2rem;
+}
+
+/* Glass Card */
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2.5rem;
+}
+
+/* Tabs */
+.tab-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.tab-buttons button {
+  background: #ffffff33;
+  color: white;
+  padding: 0.6rem 1.3rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.tab-buttons button:hover {
+  background: #ffffff55;
+}
+
+.tab-buttons button.active {
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  box-shadow: 0 0 10px #8e2de2aa;
+}
+
+/* Footer */
+.dashboard-footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-card {
+    padding: 1.5rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.2rem;
+  }
+}
+/* === Layout Flex === */
+.dashboard-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+/* Sidebar Glass */
+.dashboard-sidebar {
+  min-width: 240px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 2rem 1rem;
+  height: fit-content;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.dashboard-sidebar p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  word-break: break-word;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.3rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logout-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ff4b2baa;
+}
+
+/* Main Content */
+.dashboard-content {
+  flex: 1;
+}
