@@ -1,0 +1,158 @@
+/* src/components/LandingPage.css */
+
+.landing-wrapper {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 2rem;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 0;
+}
+
+/* === 🔮 Animated Background Blobs === */
+.landing-wrapper::before,
+.landing-wrapper::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.5;
+  animation: blobAnimation 20s infinite ease-in-out;
+  z-index: 1;
+}
+
+.landing-wrapper::before {
+  width: 400px;
+  height: 400px;
+  background: #8e2de2;
+  top: -10%;
+  left: -10%;
+}
+
+.landing-wrapper::after {
+  width: 400px;
+  height: 400px;
+  background: #4a00e0;
+  bottom: -10%;
+  right: -10%;
+}
+
+@keyframes blobAnimation {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+}
+
+/* === Main Glass Card === */
+.landing-glass {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 3.5rem;
+  max-width: 540px;
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.4s ease;
+}
+
+.landing-glass:hover {
+  transform: scale(1.015);
+}
+
+.landing-title {
+  font-size: 3.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+
+.landing-subtitle {
+  font-size: 1.5rem;
+  opacity: 0.95;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  color: #e0e0e0;
+}
+
+.landing-btn {
+  background: linear-gradient(135deg, #8e2de2, #4a00e0);
+  color: #fff;
+  border: none;
+  padding: 1rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.landing-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #8e2de2aa;
+}
+
+/* === Floating Image === */
+.landing-illustration {
+  position: relative;
+  z-index: 10;
+}
+
+.landing-illustration img {
+  max-width: 560px;
+  width: 100%;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+  100% { transform: translateY(0px); }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .landing-wrapper {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding-top: 4rem;
+  }
+
+  .landing-illustration img {
+    max-width: 320px;
+    margin-bottom: 2rem;
+  }
+
+  .landing-glass {
+    padding: 2.5rem;
+  }
+
+  .landing-title {
+    font-size: 2.8rem;
+  }
+
+  .landing-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .landing-btn {
+    font-size: 1rem;
+    padding: 0.9rem 2rem;
+  }
+}

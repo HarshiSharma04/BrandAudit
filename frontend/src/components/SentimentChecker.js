@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function SentimentChecker() {
+const SentimentChecker = () => {
   const [text, setText] = useState('');
   const [sentiment, setSentiment] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -111,6 +111,6 @@ function SentimentChecker() {
       )}
     </div>
   );
-}
+};
 
 export default SentimentChecker;

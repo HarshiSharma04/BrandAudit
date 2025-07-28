@@ -203,6 +203,70 @@ def analyze_youtube():
         'summary': sentiment_counts
     })
 
+# -------------------- Brand Comparision --------------------
+@app.route('/compare', methods=['POST'])
+def compare_brands():
+    data = request.get_json()
+    keywords = data.get('keywords', [])  # list of strings
+
+    comparison = {}
+
+    for keyword in keywords:
+        reddit_summary = get_reddit_summary(keyword)
+        twitter_summary = get_twitter_summary(keyword)
+        youtube_summary = get_youtube_summary(keyword)
+
+        comparison[keyword] = {
+            'Reddit': reddit_summary,
+            'Twitter': twitter_summary,
+            'YouTube': youtube_summary
+        }
+
+    return jsonify(comparison)
+
+
+# --- Utilities used above ---
+def get_reddit_summary(keyword):
+    sentiment_counts = {'Positive': 0, 'Neutral': 0, 'Negative': 0}
+    for submission in reddit.subreddit("all").search(keyword, limit=10):
+        score = analyzer.polarity_scores(submission.title)
+        compound = score['compound']
+        if compound >= 0.2:
+            sentiment_counts['Positive'] += 1
+        elif compound <= -0.2:
+            sentiment_counts['Negative'] += 1
+        else:
+            sentiment_counts['Neutral'] += 1
+    return sentiment_counts
+
+def get_twitter_summary(keyword):
+    tweets = get_tweets(keyword)
+    sentiment_counts = {'Positive': 0, 'Neutral': 0, 'Negative': 0}
+    for text in tweets:
+        score = analyzer.polarity_scores(text)
+        compound = score['compound']
+        if compound >= 0.2:
+            sentiment_counts['Positive'] += 1
+        elif compound <= -0.2:
+            sentiment_counts['Negative'] += 1
+        else:
+            sentiment_counts['Neutral'] += 1
+    return sentiment_counts
+
+def get_youtube_summary(keyword):
+    comments = get_youtube_comments(keyword)
+    sentiment_counts = {'Positive': 0, 'Neutral': 0, 'Negative': 0}
+    for text in comments:
+        score = analyzer.polarity_scores(text)
+        compound = score['compound']
+        if compound >= 0.2:
+            sentiment_counts['Positive'] += 1
+        elif compound <= -0.2:
+            sentiment_counts['Negative'] += 1
+        else:
+            sentiment_counts['Neutral'] += 1
+    return sentiment_counts
+
 
 # -------------------- Run App --------------------
 if __name__ == '__main__':
