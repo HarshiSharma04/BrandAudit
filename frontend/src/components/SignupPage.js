@@ -1,9 +1,10 @@
-// src/components/SignupPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -11,36 +12,35 @@ const SignupPage = () => {
   const [password, setPassword] = useState('');
 
   const handleSignup = async (e) => {
-  e.preventDefault();
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    navigate('/dashboard');
-  } catch (error) {
-    let message = 'Signup failed. Try again.';
-    if (error.code === 'auth/email-already-in-use') {
-      message = 'This email is already in use. Try logging in.';
-    } else if (error.code === 'auth/weak-password') {
-      message = 'Password should be at least 6 characters.';
-    } else if (error.code === 'auth/invalid-email') {
-      message = 'Please enter a valid email address.';
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard');
+    } catch (error) {
+      let message = 'Signup failed.';
+      if (error.code === 'auth/email-already-in-use') {
+        message = 'Email is already registered.';
+      } else if (error.code === 'auth/invalid-email') {
+        message = 'Please enter a valid email.';
+      } else if (error.code === 'auth/weak-password') {
+        message = 'Password should be at least 6 characters.';
+      }
+      toast.error(message);
     }
-    alert(message);
-    console.error(error.message);
-  }
-};
-
+  };
 
   return (
     <div className="auth-container">
-      <h2>📝 Sign Up</h2>
       <form onSubmit={handleSignup} className="auth-form">
+        <h2>📝 Sign Up</h2>
         <input type="email" placeholder="Email" value={email}
           onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="Password" value={password}
           onChange={(e) => setPassword(e.target.value)} required />
         <button type="submit">Sign Up</button>
+        <p>Already have an account? <span onClick={() => navigate('/login')}>Login</span></p>
       </form>
-      <p>Already have an account? <span onClick={() => navigate('/login')}>Login</span></p>
+      <ToastContainer />
     </div>
   );
 };
