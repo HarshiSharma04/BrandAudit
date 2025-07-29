@@ -27,7 +27,11 @@ const Navbar = ({ onTabChange }) => {
       <div className="navbar-right">
         {user && (
           <>
-            <span className="user-email">{user.email}</span>
+            <img
+              src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.email}`}
+              alt="Profile"
+              className="profile-pic"
+            />
             <button onClick={handleLogout} className="logout-btn">Logout</button>
           </>
         )}

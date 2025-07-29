@@ -9,9 +9,11 @@ import YouTubeSentiment from './YouTubeSentiment';
 import CompareDashboard from './CompareDashboard';
 import Navbar from './Navbar';
 import './Dashboard.css';
+import illustration from '../assets/illustration1.jpg';
+
 
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState('reddit');
+  const [activeTab, setActiveTab] = useState('home'); // FIXED DEFAULT TAB
   const navigate = useNavigate();
 
   const handleTabChange = (tab) => {
@@ -20,6 +22,21 @@ function Dashboard() {
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'home':
+  return (
+    <div className="dashboard-card home-intro-card">
+      
+      
+      <p className="intro-description">
+        BrandSentinel is your real-time brand sentiment intelligence dashboard. It enables you to monitor, analyze, and compare public perception of your brand across major platforms like Reddit, Twitter, and YouTube all enhanced with AI-driven sentiment analysis. Make smarter decisions backed by data, not guesswork.
+      </p>
+      <div className="intro-image">
+        <img src={illustration} alt="Illustration" />
+
+      </div>
+    </div>
+  );
+
       case 'analyzer':
         return (
           <>
@@ -79,7 +96,7 @@ function Dashboard() {
       <main className="dashboard-main">
         <header className="dashboard-header">
           <h1>Welcome to <span className="brand-gradient">BrandSentinel</span></h1>
-          <p>Analyze how people feel about your brand across platforms</p>
+          
         </header>
 
         {renderTabContent()}
