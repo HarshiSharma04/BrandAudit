@@ -38,7 +38,7 @@ const TwitterSentiment = () => {
           summary.Neutral || 0,
           summary.Negative || 0
         ],
-        backgroundColor: ['#4caf50', '#ffeb3b', '#f44336'],
+        backgroundColor: ['#a6f7adff', '#ffe589ff', '#f99eabff'],
         borderWidth: 1
       }
     ]
@@ -82,7 +82,21 @@ const TwitterSentiment = () => {
         <div style={{ marginTop: '2rem', textAlign: 'center' }}>
           <h3>📊 Sentiment Summary:</h3>
           <div style={{ width: '300px', margin: 'auto' }}>
-            <Pie data={chartData} />
+            <Pie data={chartData}
+            options={{
+    plugins: {
+      legend: {
+        labels: {
+          color: 'white', // ✅ Make labels black for better readability
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        }
+      }
+    }
+  }}
+            />
           </div>
         </div>
       )}
@@ -96,14 +110,16 @@ const TwitterSentiment = () => {
               style={{
                 backgroundColor:
                   tweet.sentiment === 'Positive'
-                    ? '#e8f5e9'
+                    ? '#a6f7adff'
                     : tweet.sentiment === 'Negative'
-                    ? '#ffebee'
-                    : '#fef9e7',
+                    ? '#f99eabff'
+                    : '#ffe589ff',
+                color: '#333',
                 padding: '1rem',
                 borderRadius: '8px',
                 marginBottom: '1rem',
                 border: '1px solid #ccc'
+                
               }}
             >
               <strong>{tweet.sentiment}</strong> — Score: {tweet.score.toFixed(2)}

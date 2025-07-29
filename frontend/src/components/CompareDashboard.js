@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+} from 'chart.js';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -37,17 +44,17 @@ const CompareDashboard = () => {
         {
           label: 'Positive',
           data: positive,
-          backgroundColor: '#4caf50'
+          backgroundColor: '#a6f7adff'
         },
         {
           label: 'Neutral',
           data: neutral,
-          backgroundColor: '#ffeb3b'
+          backgroundColor: '#ffe589ff'
         },
         {
           label: 'Negative',
           data: negative,
-          backgroundColor: '#f44336'
+          backgroundColor: '#f99eabff'
         }
       ]
     };
@@ -60,7 +67,12 @@ const CompareDashboard = () => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Enter brands separated by commas (e.g., Nike, Adidas)"
-        style={{ width: '60%', padding: '0.6rem', borderRadius: '8px', marginRight: '1rem' }}
+        style={{
+          width: '60%',
+          padding: '0.6rem',
+          borderRadius: '8px',
+          marginRight: '1rem'
+        }}
       />
       <button
         onClick={handleCompare}
@@ -81,10 +93,39 @@ const CompareDashboard = () => {
 
       {result && (
         <div style={{ marginTop: '2rem' }}>
-          {['Reddit', 'Twitter', 'YouTube'].map((platform, idx) => (
-            <div key={idx} style={{ marginBottom: '3rem' }}>
-              <h3>{platform} Sentiment</h3>
-              <Bar data={generateChartData(platform)} />
+          {/* Order changed: Reddit -> YouTube -> Twitter */}
+          {['Reddit', 'YouTube', 'Twitter'].map((platform, idx) => (
+            <div
+              key={idx}
+              style={{
+                marginBottom: '3rem',
+                background: 'rgba(255, 255, 255, 0.07)',
+                padding: '2rem',
+                borderRadius: '16px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                color: '#fff'
+              }}
+            >
+              <h3 style={{ color: '#fff', marginBottom: '1rem' }}>{platform} Sentiment</h3>
+              <Bar
+                data={generateChartData(platform)}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      labels: { color: '#fff' }
+                    }
+                  },
+                  scales: {
+                    x: {
+                      ticks: { color: '#fff' }
+                    },
+                    y: {
+                      ticks: { color: '#fff' }
+                    }
+                  }
+                }}
+              />
             </div>
           ))}
         </div>
